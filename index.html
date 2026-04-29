@@ -861,11 +861,10 @@ footer {
   /* HERO */
   #hero { min-height: 100svh; }
   .hero-top { padding: 90px 20px 0; flex-direction: column; gap: 20px; }
-  .hero-cards-col { flex-direction: row; margin-top: 60px; }
-  .hero-float-card { width: 50%; max-width: 170px; }
+  .hero-cards-col { display: none; }
   .hero-bottom { padding: 0 20px 0; }
   .hero-bigname { white-space: nowrap; overflow: visible; }
-  .hero-footer-row { padding: 12px 20px 32px; flex-direction: column; align-items: flex-start; gap: 14px; }
+  .hero-footer-row { padding: 12px 20px 32px; flex-direction: column; align-items: flex-start; justify-content: flex-start; gap: 14px; }
   .hero-tagline { font-size: 13px; text-align: left; }
   .hero-cta { align-self: flex-start; }
 
@@ -913,6 +912,9 @@ footer {
   .cat-cards.cols-3 { grid-template-columns: 1fr; }
   .cat-cards.cols-4 { grid-template-columns: 1fr 1fr; }
   .card-screen { height: 220px; }
+  /* на мобиле hover не работает — показываем overlay-pill всегда */
+  .card-overlay { background: oklch(8% 0.01 58 / 0.3); }
+  .overlay-pill { opacity: 1; transform: scale(1) translateY(0); }
 }
 
 @media (max-width: 480px) {

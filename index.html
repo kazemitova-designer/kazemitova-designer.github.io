@@ -855,7 +855,8 @@ footer {
   .hamburger { display: flex; justify-self: end; z-index: 1000; }
   .hamburger span { width: 28px; height: 2px; }
   .nav-logo { font-size: 20px; }
-  body.menu-open { overflow: hidden; }
+  body.menu-open { overflow: hidden; position: fixed; width: 100%; }
+  html.menu-open { overflow: hidden; }
 
   /* HERO */
   #hero { min-height: 100svh; }
@@ -863,12 +864,10 @@ footer {
   .hero-cards-col { flex-direction: row; margin-top: 60px; }
   .hero-float-card { width: 50%; max-width: 170px; }
   .hero-bottom { padding: 0 20px 0; }
-  .hero-bigname {
-    font-size: clamp(16px, 6.5vw, 36px);
-    white-space: nowrap; overflow: hidden;
-  }
+  .hero-bigname { white-space: nowrap; overflow: visible; }
   .hero-footer-row { padding: 12px 20px 32px; flex-direction: column; align-items: flex-start; gap: 14px; }
   .hero-tagline { font-size: 13px; text-align: left; }
+  .hero-cta { align-self: flex-start; }
 
   /* WORK */
   #work { padding: 64px 20px; }
@@ -1148,7 +1147,7 @@ footer {
 
   <div class="cat-cards cols-4 reveal d1">
 
-    <a href="#" class="work-card tall">
+    <a href="javascript:void(0)" class="work-card tall">
       <div class="card-thumb">
         <div class="card-fill photo-preview" style="background-image:url('assets/souldance.jpg'); background-color: oklch(18% 0.01 58);"></div>
         <div class="card-overlay"><div class="overlay-pill">Смотреть <svg width="12" height="12" viewBox="0 0 32 32" fill="none"><line x1="4" y1="28" x2="28" y2="4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M12 4 L28 4 L28 20" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div></div>
@@ -1156,7 +1155,7 @@ footer {
       <div class="card-meta"><span class="card-name">Тип Топ</span><span class="card-tag">Сертификат · Магазин одежды</span></div>
     </a>
 
-    <a href="#" class="work-card tall">
+    <a href="javascript:void(0)" class="work-card tall">
       <div class="card-thumb">
         <div class="card-fill photo-preview" style="background-image:url('assets/wowbrows.jpg'); background-color: oklch(18% 0.01 58);"></div>
         <div class="card-overlay"><div class="overlay-pill">Смотреть <svg width="12" height="12" viewBox="0 0 32 32" fill="none"><line x1="4" y1="28" x2="28" y2="4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M12 4 L28 4 L28 20" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div></div>
@@ -1164,7 +1163,7 @@ footer {
       <div class="card-meta"><span class="card-name">WOW! BROWS</span><span class="card-tag">VK-оформление · Бровист</span></div>
     </a>
 
-    <a href="#" class="work-card tall">
+    <a href="javascript:void(0)" class="work-card tall">
       <div class="card-thumb">
         <div class="card-fill photo-preview" style="background-image:url('assets/petrova.jpg'); background-color: oklch(18% 0.01 58);"></div>
         <div class="card-overlay"><div class="overlay-pill">Смотреть <svg width="12" height="12" viewBox="0 0 32 32" fill="none"><line x1="4" y1="28" x2="28" y2="4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M12 4 L28 4 L28 20" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div></div>
@@ -1172,7 +1171,7 @@ footer {
       <div class="card-meta"><span class="card-name">Елена Петрова</span><span class="card-tag">Визитка · Сертификат</span></div>
     </a>
 
-    <a href="#" class="work-card tall">
+    <a href="javascript:void(0)" class="work-card tall">
       <div class="card-thumb">
         <div class="card-fill photo-preview" style="background-image:url('assets/dreamhair.jpg'); background-color: oklch(18% 0.01 58);"></div>
         <div class="card-overlay"><div class="overlay-pill">Смотреть <svg width="12" height="12" viewBox="0 0 32 32" fill="none"><line x1="4" y1="28" x2="28" y2="4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M12 4 L28 4 L28 20" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div></div>
@@ -1335,13 +1334,27 @@ footer {
   // hamburger
   const hamburger = document.getElementById('hamburger');
   const mobileNav = document.getElementById('mobile-nav-overlay');
+  let scrollY = 0;
   hamburger.addEventListener('click', () => {
-    mobileNav.classList.toggle('open');
-    document.body.classList.toggle('menu-open');
+    const isOpen = mobileNav.classList.toggle('open');
+    if (isOpen) {
+      scrollY = window.scrollY;
+      document.body.style.top = `-${scrollY}px`;
+      document.body.classList.add('menu-open');
+      document.documentElement.classList.add('menu-open');
+    } else {
+      document.body.classList.remove('menu-open');
+      document.documentElement.classList.remove('menu-open');
+      document.body.style.top = '';
+      window.scrollTo(0, scrollY);
+    }
   });
   mobileNav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
     mobileNav.classList.remove('open');
     document.body.classList.remove('menu-open');
+    document.documentElement.classList.remove('menu-open');
+    document.body.style.top = '';
+    window.scrollTo(0, scrollY);
   }));
 
   // scroll reveal
@@ -1360,7 +1373,7 @@ footer {
   // bigname — fit to full width on desktop only
   function fitHeroName() {
     const el = document.querySelector('.hero-bigname');
-    if (!el || window.innerWidth <= 900) return;
+    if (!el) return;
     // measure text width using a hidden test element
     const test = document.createElement('span');
     test.style.cssText = 'position:absolute;top:-999px;left:-999px;visibility:hidden;white-space:nowrap;font-family:"Unbounded",sans-serif;font-weight:900;letter-spacing:-0.05em;font-size:100px;';
@@ -1368,7 +1381,8 @@ footer {
     document.body.appendChild(test);
     const ratio = test.offsetWidth / 100;
     document.body.removeChild(test);
-    const availW = el.parentElement.clientWidth - 96;
+    const pad = window.innerWidth <= 900 ? 40 : 96;
+    const availW = el.parentElement.clientWidth - pad;
     if (ratio > 0) el.style.fontSize = Math.floor(availW / ratio * 0.99) + 'px';
   }
   document.fonts.ready.then(() => { fitHeroName(); setTimeout(fitHeroName, 200); });

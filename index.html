@@ -864,9 +864,10 @@ footer {
   .hero-cards-col { display: none; }
   .hero-bottom { padding: 0 20px 0; }
   .hero-bigname { white-space: nowrap; overflow: visible; }
-  .hero-footer-row { padding: 12px 20px 32px; flex-direction: column; align-items: flex-start; justify-content: flex-start; gap: 14px; }
-  .hero-tagline { font-size: 13px; text-align: left; }
-  .hero-cta { align-self: flex-start; }
+  .hero-footer-row { padding: 12px 20px 32px; flex-direction: column; align-items: flex-start; justify-content: flex-start; gap: 14px; width: 100%; }
+  .hero-tagline { font-size: 13px; text-align: left; max-width: 100%; }
+  .hero-cta { align-self: flex-start; margin-left: 0; }
+  .hero-spec { text-align: left; }
 
   /* WORK */
   #work { padding: 64px 20px; }
@@ -912,9 +913,12 @@ footer {
   .cat-cards.cols-3 { grid-template-columns: 1fr; }
   .cat-cards.cols-4 { grid-template-columns: 1fr 1fr; }
   .card-screen { height: 220px; }
-  /* на мобиле hover не работает — показываем overlay-pill всегда */
-  .card-overlay { background: oklch(8% 0.01 58 / 0.3); }
-  .overlay-pill { opacity: 1; transform: scale(1) translateY(0); }
+  /* на мобиле hover → tap: показываем по классу .tapped */
+  .work-card.tapped .card-overlay { background: oklch(8% 0.01 58 / 0.55); }
+  .work-card.tapped .overlay-pill {
+    opacity: 1; transform: scale(1) translateY(0);
+    background: oklch(95% 0.005 65); color: oklch(12% 0.014 58);
+  }
 }
 
 @media (max-width: 480px) {
@@ -1409,6 +1413,27 @@ footer {
     }
     tickerFrame();
   })();
+
+  // mobile tap to show card overlay
+  if ('ontouchstart' in window) {
+    document.querySelectorAll('.work-card').forEach(card => {
+      card.addEventListener('touchstart', function(e) {
+        if (this.classList.contains('tapped')) return; // second tap — let link follow
+        // if card is an <a> with real href, first tap shows overlay
+        const href = this.getAttribute('href');
+        if (href && href !== 'javascript:void(0)' && href !== '#') {
+          e.preventDefault();
+        }
+        document.querySelectorAll('.work-card.tapped').forEach(c => c.classList.remove('tapped'));
+        this.classList.add('tapped');
+      }, { passive: false });
+    });
+    document.addEventListener('touchstart', function(e) {
+      if (!e.target.closest('.work-card')) {
+        document.querySelectorAll('.work-card.tapped').forEach(c => c.classList.remove('tapped'));
+      }
+    });
+  }
 
   // counter animation
   function animateCounter(el) {

@@ -653,7 +653,7 @@ nav * { pointer-events: all; }
 .srv-card {
   border-radius: 16px;
   padding: 20px;
-  height: 170px;
+  min-height: 150px;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
@@ -921,6 +921,12 @@ footer {
   .card-screen { height: 180px; }
   .card-meta { flex-direction: column; align-items: flex-start; gap: 4px; }
   .graphic-divider { flex-direction: column; align-items: flex-start; gap: 16px; margin-top: 48px; }
+  /* tap-to-show overlay для всех touch-устройств (мобайл + планшет) */
+  .work-card.tapped .card-overlay { background: oklch(8% 0.01 58 / 0.55); }
+  .work-card.tapped .overlay-pill {
+    opacity: 1; transform: scale(1) translateY(0);
+    background: oklch(95% 0.005 65); color: oklch(12% 0.014 58);
+  }
 
   /* STATS */
   #stats { grid-template-columns: 1fr; }
@@ -955,19 +961,11 @@ footer {
   .cat-cards.cols-3 { grid-template-columns: 1fr; }
   .cat-cards.cols-4 { grid-template-columns: 1fr 1fr; }
   .card-screen { height: 220px; }
-  /* на мобиле hover → tap: показываем по классу .tapped */
-  .work-card.tapped .card-overlay { background: oklch(8% 0.01 58 / 0.55); }
-  .work-card.tapped .overlay-pill {
-    opacity: 1; transform: scale(1) translateY(0);
-    background: oklch(95% 0.005 65); color: oklch(12% 0.014 58);
-  }
 }
 
 @media (max-width: 480px) {
   .about-nums { grid-template-columns: 1fr 1fr; }
   .num-cell { padding: 24px 16px; }
-  .hero-float-card { max-width: 150px; }
-  .hfc-thumb { height: 100px; }
   .pres-inner { grid-template-columns: 1fr; }
 }
 </style>
@@ -978,18 +976,18 @@ footer {
 <nav id="navbar">
   <a href="#" class="nav-logo">Marina<span>.</span></a>
 
-  <div class="nav-socials">
-    <a href="mailto:kazemitova.marina@yandex.ru" class="nav-social">Email</a>
-    <a href="https://vk.com/kazemitova_design" target="_blank" class="nav-social">ВК</a>
-    <a href="https://t.me/kazemitova" target="_blank" class="nav-social">TG</a>
-    <a href="https://www.behance.net/kazemitova5285" target="_blank" class="nav-social">Be</a>
-  </div>
-
   <div class="nav-pill" id="nav-menu">
     <a href="#work" class="nav-pill-link active">Работы</a>
     <a href="#about" class="nav-pill-link">Обо мне</a>
     <a href="#services" class="nav-pill-link">Услуги</a>
     <a href="#contact" class="nav-pill-link">Контакты</a>
+  </div>
+
+  <div class="nav-socials">
+    <a href="mailto:kazemitova.marina@yandex.ru" class="nav-social">Email</a>
+    <a href="https://vk.com/kazemitova_design" target="_blank" class="nav-social">ВК</a>
+    <a href="https://t.me/kazemitova" target="_blank" class="nav-social">TG</a>
+    <a href="https://www.behance.net/kazemitova5285" target="_blank" class="nav-social">Be</a>
   </div>
 
   <button class="hamburger" id="hamburger" aria-label="Меню">
@@ -1355,7 +1353,7 @@ footer {
   <div class="footer-name" data-text="MARINA·DESIGNER">MARINA·DESIGNER</div>
   <div class="footer-right">
     <div class="footer-links">
-      <a href="https://vk.com/kazemitova_design" target="_blank">ВКонтактые</a>
+      <a href="https://vk.com/kazemitova_design" target="_blank">ВКонтакте</a>
       <a href="https://t.me/kazemitova" target="_blank">Telegram</a>
       <a href="https://www.behance.net/kazemitova5285" target="_blank">Behance</a>
     </div>

@@ -821,6 +821,39 @@ footer {
 .d4 { transition-delay: .24s; }
 .d5 { transition-delay: .30s; }
 
+/* ─── LIGHTBOX ─── */
+.lightbox {
+  display: none;
+  position: fixed; inset: 0; z-index: 2000;
+  background: rgba(0,0,0,0.92);
+  align-items: center; justify-content: center;
+  padding: 20px;
+}
+.lightbox.open { display: flex; }
+.lightbox-inner {
+  position: relative;
+  max-width: 900px; width: 100%;
+  max-height: 90vh;
+  display: flex; align-items: center; justify-content: center;
+}
+.lightbox-img {
+  max-width: 100%; max-height: 85vh;
+  object-fit: contain;
+  border-radius: 10px;
+  box-shadow: 0 32px 80px rgba(0,0,0,0.7);
+}
+.lightbox-close {
+  position: fixed; top: 20px; right: 20px;
+  width: 44px; height: 44px; border-radius: 50%;
+  background: oklch(20% 0.01 58); border: 1px solid oklch(30% 0.01 58);
+  color: var(--text); cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 20px; line-height: 1;
+  transition: background .2s;
+  z-index: 2001;
+}
+.lightbox-close:hover { background: oklch(28% 0.01 58); }
+
 /* ─── MOBILE NAV OVERLAY ─── */
 .mobile-nav-overlay {
   display: none;
@@ -831,6 +864,15 @@ footer {
   gap: 16px;
 }
 .mobile-nav-overlay.open { display: flex; }
+.mobile-nav-close {
+  position: absolute; top: 20px; right: 20px;
+  width: 44px; height: 44px; border-radius: 50%;
+  background: oklch(20% 0.01 58); border: 1px solid oklch(30% 0.01 58);
+  color: var(--text); cursor: pointer; font-size: 18px;
+  display: flex; align-items: center; justify-content: center;
+  transition: background .2s;
+}
+.mobile-nav-close:hover { background: oklch(28% 0.01 58); }
 .mobile-nav-link {
   font-family: 'Unbounded', sans-serif;
   font-size: 22px; font-weight: 600;
@@ -955,12 +997,21 @@ footer {
   </button>
 </nav>
 
-<!-- Mobile nav overlay (outside nav to avoid backdrop-filter stacking context) -->
+<!-- Mobile nav overlay -->
 <div class="mobile-nav-overlay" id="mobile-nav-overlay">
+  <button class="mobile-nav-close" id="mobile-nav-close" aria-label="Закрыть">✕</button>
   <a href="#work" class="mobile-nav-link">Работы</a>
   <a href="#about" class="mobile-nav-link">Обо мне</a>
   <a href="#services" class="mobile-nav-link">Услуги</a>
   <a href="#contact" class="mobile-nav-link">Контакты</a>
+</div>
+
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox">
+  <button class="lightbox-close" id="lightbox-close" aria-label="Закрыть">✕</button>
+  <div class="lightbox-inner">
+    <img class="lightbox-img" id="lightbox-img" src="" alt="">
+  </div>
 </div>
 
 <!-- HERO -->
@@ -1153,37 +1204,37 @@ footer {
 
   <div class="cat-cards cols-4 reveal d1">
 
-    <a href="javascript:void(0)" class="work-card tall">
+    <div class="work-card tall lightbox-trigger" data-img="assets/souldance.jpg" data-title="Тип Топ">
       <div class="card-thumb">
         <div class="card-fill photo-preview" style="background-image:url('assets/souldance.jpg'); background-color: oklch(18% 0.01 58);"></div>
-        <div class="card-overlay"><div class="overlay-pill">Смотреть <svg width="12" height="12" viewBox="0 0 32 32" fill="none"><line x1="4" y1="28" x2="28" y2="4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M12 4 L28 4 L28 20" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div></div>
+        <div class="card-overlay"><div class="overlay-pill">Смотреть</div></div>
       </div>
       <div class="card-meta"><span class="card-name">Тип Топ</span><span class="card-tag">Сертификат · Магазин одежды</span></div>
-    </a>
+    </div>
 
-    <a href="javascript:void(0)" class="work-card tall">
+    <div class="work-card tall lightbox-trigger" data-img="assets/wowbrows.jpg" data-title="WOW! BROWS">
       <div class="card-thumb">
         <div class="card-fill photo-preview" style="background-image:url('assets/wowbrows.jpg'); background-color: oklch(18% 0.01 58);"></div>
-        <div class="card-overlay"><div class="overlay-pill">Смотреть <svg width="12" height="12" viewBox="0 0 32 32" fill="none"><line x1="4" y1="28" x2="28" y2="4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M12 4 L28 4 L28 20" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div></div>
+        <div class="card-overlay"><div class="overlay-pill">Смотреть</div></div>
       </div>
       <div class="card-meta"><span class="card-name">WOW! BROWS</span><span class="card-tag">VK-оформление · Бровист</span></div>
-    </a>
+    </div>
 
-    <a href="javascript:void(0)" class="work-card tall">
+    <div class="work-card tall lightbox-trigger" data-img="assets/petrova.jpg" data-title="Елена Петрова">
       <div class="card-thumb">
         <div class="card-fill photo-preview" style="background-image:url('assets/petrova.jpg'); background-color: oklch(18% 0.01 58);"></div>
-        <div class="card-overlay"><div class="overlay-pill">Смотреть <svg width="12" height="12" viewBox="0 0 32 32" fill="none"><line x1="4" y1="28" x2="28" y2="4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M12 4 L28 4 L28 20" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div></div>
+        <div class="card-overlay"><div class="overlay-pill">Смотреть</div></div>
       </div>
       <div class="card-meta"><span class="card-name">Елена Петрова</span><span class="card-tag">Визитка · Сертификат</span></div>
-    </a>
+    </div>
 
-    <a href="javascript:void(0)" class="work-card tall">
+    <div class="work-card tall lightbox-trigger" data-img="assets/dreamhair.jpg" data-title="Dream Hair">
       <div class="card-thumb">
         <div class="card-fill photo-preview" style="background-image:url('assets/dreamhair.jpg'); background-color: oklch(18% 0.01 58);"></div>
-        <div class="card-overlay"><div class="overlay-pill">Смотреть <svg width="12" height="12" viewBox="0 0 32 32" fill="none"><line x1="4" y1="28" x2="28" y2="4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M12 4 L28 4 L28 20" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div></div>
+        <div class="card-overlay"><div class="overlay-pill">Смотреть</div></div>
       </div>
       <div class="card-meta"><span class="card-name">Dream Hair</span><span class="card-tag">Визитки · Салон</span></div>
-    </a>
+    </div>
 
   </div>
 
@@ -1413,6 +1464,45 @@ footer {
     }
     tickerFrame();
   })();
+
+  // close button for mobile nav
+  const mobileNavClose = document.getElementById('mobile-nav-close');
+  if (mobileNavClose) {
+    mobileNavClose.addEventListener('click', () => {
+      mobileNav.classList.remove('open');
+      document.body.classList.remove('menu-open');
+      document.documentElement.classList.remove('menu-open');
+      document.body.style.top = '';
+      window.scrollTo(0, scrollY);
+    });
+  }
+
+  // lightbox
+  const lightbox = document.getElementById('lightbox');
+  const lightboxImg = document.getElementById('lightbox-img');
+  const lightboxClose = document.getElementById('lightbox-close');
+
+  function openLightbox(src, title) {
+    lightboxImg.src = src;
+    lightboxImg.alt = title || '';
+    lightbox.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeLightbox() {
+    lightbox.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  document.querySelectorAll('.lightbox-trigger').forEach(card => {
+    card.addEventListener('click', function() {
+      openLightbox(this.dataset.img, this.dataset.title);
+    });
+  });
+  lightboxClose.addEventListener('click', closeLightbox);
+  lightbox.addEventListener('click', function(e) {
+    if (e.target === lightbox) closeLightbox();
+  });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
 
   // mobile tap to show card overlay
   if ('ontouchstart' in window) {

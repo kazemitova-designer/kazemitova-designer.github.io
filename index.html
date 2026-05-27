@@ -968,6 +968,17 @@ footer {
   .num-cell { padding: 24px 16px; }
   .pres-inner { grid-template-columns: 1fr; }
 }
+
+/* ─── CRM GRID ─── */
+.crm-grid { grid-template-columns: 1fr 1fr; }
+.crm-grid .card-thumb { aspect-ratio: 16/10; }
+.crm-grid .card-fill.crm-preview {
+  background-size: cover;
+  background-position: top center;
+  transition: background-position 4s ease-in-out;
+}
+.crm-grid .work-card:hover .card-fill.crm-preview { background-position: bottom center; }
+@media (max-width: 700px) { .crm-grid { grid-template-columns: 1fr; } }
 </style>
 <link id="gfont-Manrope" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700&amp;display=swap"><!-- Yandex.Metrika counter -->
 <script type="text/javascript">
@@ -1205,10 +1216,52 @@ footer {
 
   </div>
 
+
+  <!-- ─── CRM APP ─── -->
+  <div class="graphic-divider reveal">
+    <div>
+      <div class="section-num" style="margin-bottom:14px;">02.2 — UI/UX</div>
+      <h2 class="section-h" style="font-size:clamp(28px,3.5vw,48px);">UI · Веб-CRM</h2>
+    </div>
+    <p class="graphic-divider-desc">Браузерное приложение без установки и сервера — расписание, клиентская база, учёт мастеров и контроль оплат.</p>
+  </div>
+
+  <div class="cat-cards crm-grid reveal d1">
+
+    <div class="work-card">
+      <div class="card-thumb">
+        <div class="card-fill crm-preview" style="background-image:url('assets/crm-1.png');"></div>
+      </div>
+      <div class="card-meta"><span class="card-name">Сегодня</span><span class="card-tag">Расписание · Статусы нарядов</span></div>
+    </div>
+
+    <div class="work-card">
+      <div class="card-thumb">
+        <div class="card-fill crm-preview" style="background-image:url('assets/crm-2.png');"></div>
+      </div>
+      <div class="card-meta"><span class="card-name">Мастера</span><span class="card-tag">Нарядо-часы · Выплаты</span></div>
+    </div>
+
+    <div class="work-card">
+      <div class="card-thumb">
+        <div class="card-fill crm-preview" style="background-image:url('assets/crm-3.png');"></div>
+      </div>
+      <div class="card-meta"><span class="card-name">Оплата</span><span class="card-tag">Контроль · Печать наряд-заказа</span></div>
+    </div>
+
+    <div class="work-card">
+      <div class="card-thumb">
+        <div class="card-fill crm-preview" style="background-image:url('assets/crm-4.png');"></div>
+      </div>
+      <div class="card-meta"><span class="card-name">Клиенты</span><span class="card-tag">База · История визитов</span></div>
+    </div>
+
+  </div>
+
   <!-- Graphic design subsection -->
   <div class="graphic-divider reveal">
     <div>
-      <div class="section-num" style="margin-bottom:14px;">02.2 — Графика</div>
+      <div class="section-num" style="margin-bottom:14px;">02.3 — Графика</div>
       <h2 class="section-h" style="font-size:clamp(28px,3.5vw,48px);">Полиграфия<br>& брендинг</h2>
     </div>
     <p class="graphic-divider-desc">Визитки, сертификаты, фирменный стиль — печатные материалы, которые остаются в руках клиента</p>
@@ -1253,7 +1306,7 @@ footer {
   <!-- Presentations subsection -->
   <div class="graphic-divider reveal">
     <div>
-      <div class="section-num" style="margin-bottom:14px;">02.3 — Презентации</div>
+      <div class="section-num" style="margin-bottom:14px;">02.4 — Презентации</div>
       <h2 class="section-h" style="font-size:clamp(28px,3.5vw,48px);">Питч-деки<br>& презентации</h2>
     </div>
     <p class="graphic-divider-desc">Структурирую информацию и создаю презентации в фирменном стиле компании — от обложки до финального слайда</p>
@@ -1281,6 +1334,9 @@ footer {
 
 
   </div>
+
+
+
 
 </section>
 
@@ -1564,6 +1620,7 @@ footer {
     });
   }, { threshold: 0.5 });
   document.querySelectorAll('[data-count]').forEach(el => counterObs.observe(el));
+
 
   // subtle parallax on hero name
   window.addEventListener('scroll', () => {
